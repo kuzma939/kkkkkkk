@@ -9,10 +9,8 @@ export default function About() {
     <section className="bg-white dark:bg-gray-900 py-12 px-6 sm:px-12" id="about">
       <div className="max-w-8xl mx-auto relative">
        
-        {/* Макет для планшетів та десктопів */}
-   
 <div className="relative hidden sm:grid grid-cols-1 md:grid-cols-2 items-center md:gap-8 xl:gap-2">
-          {/* Зображення */}
+      
           <div className="flex justify-start relative group xl:ml-36 overflow-hidden">
   <Image
     src="/hoom/about.avif"
