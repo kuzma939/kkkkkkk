@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+html,
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Thin.woff2") format("woff2"),
+       url("/fonts/Montserrat-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-ThinItalic.woff2") format("woff2"),
+       url("/fonts/Montserrat-ThinItalic.woff") format("woff");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}*/
+.dark {
+  background-color: black;
+  color: white;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+/*
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}*/
+input, textarea {
+  background: transparent;
+  border: none; 
+  border-bottom: 1px solid var(--foreground);
+  color: var(--foreground); 
+  outline: none; 
+}
+@layer base {
+  @layer base {
+    .section-container {
+      @apply flex flex-col relative mx-0 px-0 w-full max-w-none overflow-hidden pt-8 pb-8 sm:pt-12 sm:pb-12;
+    }
+  }
+  .content-wrapper {
+    @apply max-w-7xl mx-auto;
+  }
+}
+@layer utilities {
+  @media (max-width: 320px) {
+    .mobile-320 {
+      @apply  text-xs leading-tight p-1;
+    }
+  }
+}
+/* Для Chrome, Safari, Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Для Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Забороняємо появу стрілок у всіх випадках */
+input[type="number"]:focus {
+  outline: none;
+}

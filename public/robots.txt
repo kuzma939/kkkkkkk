@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://shoopingsite-my9e.vercel.app/
+
+# Sitemaps
+Sitemap: https://shoopingsite-my9e.vercel.app/sitemap.xml

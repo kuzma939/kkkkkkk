@@ -1,0 +1,381 @@
+{
+  "EN": {
+    "home": {
+      "header": ["Home", "Catalogues", "About", "Contact", "Conditions", "All",
+        "Costumes", "Dresses", "Shirts", "Skirts", 
+        "Sweaters",  "Pants", "Jackets", "Tops", "Outerwear", "Shorts"
+      ],
+    
+      "hero": ["Ukrainian women's clothing brand","Ukrainian women's","clothing brand"],
+      "about": [
+        "ABOUT US:",
+        "LATORE - Ukrainian brand of women's clothing with its own production, with over 10 years of experience, with two showrooms in Ivano-Frankivsk and Kharkiv.",
+        "We are the embodiment of basic models and an original, designer approach to all products.",
+        "Our clothes are a combination of classics and comfort, femininity and harmony. Thanks to our own production, we guarantee the high quality of each product."
+        
+      ],
+      "top_products": ["Top Products"],
+      "Our_Products": ["Our Products"],
+      "special_offers": [
+        "Special Offers",
+        "Limited Time",
+        "Don't miss out on our exclusive deals. Grab them while they last \nand enjoy discounts that won&t be around forever!",
+        "Shop Now"
+      ],
+      "follow_us": ["Follow Us"],
+      "Footer": ["Poltavskyi Shliakh St, 144 А Kharkiv", "Torhovyy Tsentr", "Kyyivsʹkyy Ivano Frankivsk"]
+    },
+    "products": {
+      "header": ["Catalogues", "About", "Contact", "Conditions"]
+    },
+    "contact": {
+      "header": ["Contact", "Catalogues", "About", "Conditions"],
+      "hero": ["Contact Us", "We’d love to hear from you! Whether you have questions, comments, or simply want to learn more about what we offer, feel free to get in touch. Our team is here to assist you with any inquiries and help bring your vision to life. Don’t hesitate to reach out—we’re just a message away!",
+      "Poltavskyi Shliakh St, 144 А Kharkiv\n| | Torhovyy Tsentr Kyyivsʹkyy Ivano frankivsk"
+],
+      "input": ["First Name", "Last Name", "Phone Number", "Email", "Message", "Send", "Thanks for submitting!", " Your form has been successfully submitted!"],
+      "openninghours": ["Opening Hours", "Mon - Fri", "Saturday", "Sunday"]
+
+    },
+    "toppro": {
+      "header": ["Contact", "Catalogues", "About", "Conditions"]
+    },
+    "Conditions": {
+      "hero": [
+        "Return and exchange of goods",
+        "GENERAL TERMS OF RETURN AND EXCHANGE OF GOODS:",
+        "Return and exchange of goods is possible within 14 days after receipt.",
+        "Exchange is possible for another size and color, as well as for any other item.",
+        "In case of receiving goods of inadequate quality, the exchange and return are paid for by our store. If you were delivered the wrong item you ordered, it is also considered a product of inadequate quality, and delivery costs are covered by us.",
+        "Goods of proper quality are subject to both return and exchange without explanation. In the case of return/exchange of goods of proper quality (without defects), the buyer covers the shipping costs.",
+        "You can return or exchange goods of proper quality if:",
+        "The product has not been used and shows no signs of wear: scratches, chips, scuffs, stains, etc.;",
+        "The product retains its marketable appearance and consumer properties.",
+        "ITEMS NOT SUBJECT TO EXCHANGE OR RETURN:",
+        "Items tailored to the customer's measurements;",
+        "Items with altered length/style at the customer's request;",
+        "In this case, only alterations are possible upon prior agreement.",
+        "Delivery methods",
+        "Nova Poshta:",
+        "delivery to branches and post offices",
+        "Ukrposhta:",
+        "delivery to branches",
+        "International delivery by agreement:",
+        "Nova Poshta or Ukrposhta",
+        "Self-pickup:",
+        "from the cities of Kharkiv or Ivano-Frankivsk",
+        "Additional information:",
+        "We will be able to process the return once we receive your package at our warehouse. This reshipment may take up to 5-7 business days, excluding weekends and holidays.",
+        "For exchange or return, call technical support (24/7):"
+      ]
+    },
+    
+    "Catalogues": {
+      "header" :["All Products", "Explore our diverse range of products tailored to your needs.", " products", "Product List"]
+    },
+    
+    "SizeTable": {
+      "header": ["Size Chart", "Size (UA)", "Size (EU)", "Chest (cm)", "Waist (cm)", "Hips (cm)", "Close"]
+    },
+    
+    "SortMenu": {
+      "header": ["Sort by", "recommended", "Price (low to high)", "Price (high to low)"]
+    },
+    "Filtersidebar": {
+      "header": [
+        "Sort by", 
+        "All products", 
+        "Filter by", 
+        "Price", 
+        "Size", 
+        "Selected", 
+        "All", 
+        "Category",
+        "Filter",
+        "Confirm"
+      ],
+      "SizeCatalogue": [ "All", "S", "M", "L", "XL" ],
+      "Categories": [
+        "All", "Costumes", "Dresses", "Shirts", "Skirts", 
+        "Sweaters",  "Pants", "Jackets", "Tops", "Outerwear", "Shorts "
+      ],
+      "PaginatedProducts": ["Prev", "Next"]
+    },
+    
+    
+    "SpecialOffers": {
+      "header": ["Special Offers Collection", "Discover our exclusive deals and discounts.", "Special Offers", "Selected Product Details"]
+    },
+    
+    "Infoform":{
+      "header": ["Category", " Color", "Select", "Size", "Quantity", "Contact Us", "Clothing Size Chart", "PRODUCT INFO", "Price" ]
+    }
+  },
+  "FR": {
+    "home": {
+      "header": ["Accueil", "Catalogues", "À propos", "Contact", "Conditions",    "Tout",
+      "Costumes", "Robes", "Chemises", "Jupes", 
+    "Pulls","Pantalons", "Vestes", "Tops", "Vêtements d'extérieur","Shorts"
+  ],
+      
+      "hero": ["Marque ukrainienne de vêtements pour femmes.", "Marque ukrainienne", "De vêtements pour femmes"],
+      "about": [
+        "À propos",
+        "LATORE – une marque ukrainienne de vêtements pour femmes avec sa propre production, plus de 10 ans d'expérience, et deux showrooms à Ivano-Frankivsk et Kharkiv.",
+        "Nous sommes l'incarnation des modèles basiques et d'une approche créative et design pour chaque pièce.",
+        "Nous sommes l'incarnation des modèles basiques et d'une approche créative et design pour chaque pièce."
+      ],
+      "top_products": ["Produits phares"],
+      "Our_Products": ["Nos Produits"],
+      "special_offers": [
+        "Offres Spéciales",
+        "Offre Limitée",
+        "Ne manquez pas nos offres exclusives. Profitez-en tant qu'elles sont disponibles \net bénéficiez de réductions qui ne dureront pas éternellement !",
+        "Achetez Maintenant"
+      ],
+      "follow_us": ["Suivez-nous"]
+    },
+    
+    "contact":{
+      "hero": [
+        "Contactez-nous",
+        "Nous serions ravis de vous entendre ! Que vous ayez des questions, des commentaires ou que vous souhaitiez simplement en savoir plus sur ce que nous proposons, n'hésitez pas à nous contacter. Notre équipe est là pour répondre à vos demandes et vous aider à concrétiser vos idées. N'hésitez pas à nous écrire – nous sommes à un message de vous !",
+        "Poltavskyi Shliakh St, 144 А\n| | Torhovyy Tsentr Kyyivsʹkyy"
+      ],
+      "input": [
+        "Prénom",
+        "Nom",
+        "Numéro de téléphone",
+        "Email",
+        "Message",
+        "Envoyer",
+        "Merci pour votre soumission !",
+        "Votre formulaire a été soumis avec succès !"
+      ],
+      "openninghours": [
+        "Heures d'ouverture",
+        "Lun - Ven",
+        "Samedi",
+        "Dimanche"
+      ]
+    },
+    "Conditions": {
+      "hero": [
+        "Retour et échange de marchandises",
+        "CONDITIONS GÉNÉRALES DE RETOUR ET D'ÉCHANGE DE MARCHANDISES :",
+        "Le retour et l'échange de marchandises sont possibles dans un délai de 14 jours après réception.",
+        "L'échange est possible pour une autre taille et couleur, ainsi que pour tout autre article.",
+        "En cas de réception de marchandises de qualité insuffisante, l'échange et le retour sont pris en charge par notre magasin. Si vous avez reçu un article différent de celui commandé, il est également considéré comme un produit de qualité insuffisante, et les frais de livraison sont à notre charge.",
+        "Les articles de qualité appropriée sont soumis à un retour et à un échange sans justification. Dans le cas d'un retour/échange d'articles de qualité appropriée (sans défauts), les frais d'expédition sont à la charge de l'acheteur.",
+        "Vous pouvez retourner ou échanger des articles de qualité appropriée si :",
+        "Le produit n'a pas été utilisé et ne présente aucun signe d'usure : rayures, éclats, frottements, taches, etc. ;",
+        "Le produit conserve son aspect commercial et ses propriétés de consommation.",
+        "ARTICLES NE POUVANT PAS ÊTRE ÉCHANGÉS OU RETOURNÉS :",
+        "Les articles confectionnés sur mesure pour le client ;",
+        "Les articles dont la longueur ou le style a été modifié à la demande du client ;",
+        "Dans ce cas, seule une retouche est possible après accord préalable.",
+        "Méthodes de livraison",
+        "Nova Poshta :",
+        "livraison en succursale et dans les bureaux de poste",
+        "Ukrposhta :",
+        "livraison en succursale",
+        "Livraison internationale sur accord :",
+        "Nova Poshta ou Ukrposhta",
+        "Retrait en magasin :",
+        "depuis les villes de Kharkiv ou Ivano-Frankivsk",
+        "Informations supplémentaires :",
+        "Nous pourrons traiter le retour une fois que nous aurons reçu votre colis dans notre entrepôt. Ce réexpédition peut prendre jusqu'à 5 à 7 jours ouvrables, hors week-ends et jours fériés.",
+        "Pour un échange ou un retour, contactez le support technique (24/7) :"
+      ]
+    },
+
+    "Catalogues": {
+      "header": ["Tous les produits", "Découvrez notre gamme variée de produits adaptés à vos besoins.", " produits", "Liste des produits"]
+    },
+
+    "SizeTable": {
+      "header": ["Tableau des tailles", "Taille (UA)", "Taille (EU)", "Poitrine (cm)", "Taille (cm)", "Hanches (cm)", "Fermer"]
+    },
+
+    "SortMenu": {
+      "header": ["Trier par", "Recommandé", "Prix (du plus bas au plus élevé)", "Prix (du plus élevé au plus bas)"]
+      
+    },
+    "Filtersidebar": {
+  "header": [
+    "Trier par", 
+    "Tous les produits", 
+    "Filtrer par", 
+    "Prix", 
+    "Taille", 
+    "Sélectionné", 
+    "Tous", 
+    "Catégorie",
+    "Filtre",
+    "Confirmer"
+  ],
+  "SizeCatalogue": [ "Tous", "S", "M", "L", "XL" ],
+  "Categories": [
+    "Tous", "Costumes", "Robes", "Chemises", "Jupes", 
+    "Pulls","Pantalons", "Vestes", "Tops", "Vêtements d'extérieur","Shorts "
+  ],
+  "PaginatedProducts": ["Précédent", "Suivant"]
+},
+
+  "SpecialOffers": {
+    "header": [
+      "Collection d'offres spéciales",
+      "Découvrez nos offres et réductions exclusives.",
+      "offres spéciales",
+      "Détails du produit sélectionné"
+    ]
+  },
+
+  "Infoform": {
+    "header": [
+      "Catégorie",
+      "Couleur",
+      "Sélectionner",
+      "Taille",
+      "Quantité",
+      "Contactez-nous",
+      "Tableau des tailles",
+      "INFORMATIONS SUR LE PRODUIT",
+      "Prix"
+    ]
+  }
+
+
+
+
+    
+},
+  
+  "UA": {
+    "home": {
+      "header": ["Головна", "Каталог", "Про нас", "Контакти", "Умови",  "Усі",
+      "Костюми", "Сукні", "Сорочки", "Спідниці", 
+        "Светри", "Брюки", "Жакети", "Топи", "Верхній одяг", "Шорти"
+      ],
+      
+      "hero": ["Український бренд жіночого одягу.","Український бренд", "жіночого одягу"],
+      "about": [
+        "ПPO НАС",
+        "LATORE - український бренд жіночого одягу з власним виробництвом, з досвідом понад 10 років, з двома шоурумами в Івано-Франківську та Харкові.",
+        "Ми - втілення базових моделей та авторського, дизайнерського підходу до всіх виробів.",
+        "Наш одяг - це поєднання класики та комфорту, жіночності та гармонії. Завдяки власному виробництву ми гарантуємо високу якість кожного виробу."
+      ],
+      "top_products": ["Популярні продукти"],
+      "Our_Products": ["Наші продукти"],
+      "special_offers": [
+        "Спеціальні пропозиції",
+        "Обмежена пропозиція",
+        "Лімітовані вироби в останніх кольорах та розмірах   \nв обмеженій кількості за собівартістю!",
+        "Купуйте зараз"
+      ],
+      "follow_us": ["Слідкуйте за нами"],
+      "Footer": ["Вул.Полтавський шлях 144А Харків", "Торговий центр", "Київський Івано-Франківськ"]
+      
+    },
+    "contact": {
+      "hero": [
+        "Зворотній зв’язок",
+        "Ви можете заповнити форму нижче, і ми зв’яжемося з вами найближчим часом",
+        "Вул.Полтавський шлях 144А  Харків \n| | Торговий центр Київський Івано-Франківськ"
+      ],
+      "input": [
+        "Ім'я",
+        "Прізвище",
+        "Номер телефону",
+        "Електронна пошта",
+        "Повідомлення",
+        "Відправити",
+        "Дякуємо за відправку!",
+        "Ваша форма була успішно надіслана!"
+      ],
+      "openninghours": [
+        "Години роботи",
+        "Пон - П’ят",
+        "Субота",
+        "Неділя"
+      ]
+    },
+    "Conditions" : {
+      "hero": [
+         "Повернення та обмін товару",
+        "ЗАГАЛЬНІ УМОВИ ПОВЕРНЕННЯ ТА ОБМІНУ ТОВАРУ:",
+        "Повернення та обмін товарів можливе протягом 14 днів після отримання.",
+        "Обмін можливий як на інший розмір та колір, так і на будь-яку іншу річ.",
+        "У разі отримання товару неналежної якості обмін та повернення оплачується нашим магазином.\nЯкщо вам доставили не той товар, який ви замовляли, він теж відноситься до товару неналежної якості та доставки оплачуються нами.",
+        "Товари належної якості підлягають як поверненню, і обміну без пояснення причин. У разі \n повернення/обміну товарів належної якості (без браку), поштові витрати оплачує покупець.",
+        "Ви можете повернути або обміняти товар належної якості, якщо:",
+        "Товар не був у вживанні і не має слідів використання: подряпин, сколів, потертостей, плям тощо;",
+        "Товар зберігає товарний вигляд та свої споживчі властивості.",
+        "ОБМІНУ ТА ПОВЕРНЕННЮ НЕ ПІДЛЯГАЮТЬ:",
+        "Вироби, що пошиті за мірками клієнта;",
+        "Вироби, у яких змінена довжина виробу/ фасон за проханням замовника;",
+        "У даному випадку можлива лише переробка за попередньою домовленістю.",
+        "Ми зможемо оформити повернення тоді, коли отримаємо Вашу посилку на нашому складі.",
+        "Це пересилання може зайняти до 5-7 робочих днів без урахування вихідних та святкових днів. ",
+        "Для обміну або повернення телефонуйте у технічну підтримку (24/7): "
+        
+      ]
+    },
+    "Catalogues": {
+      "header": ["Всі товари", "Ознайомтеся з нашим різноманітним асортиментом товарів, створеним для ваших потреб.", " товарів", "Список товарів"]
+    },
+    
+    "SizeTable": {
+      "header": ["Розмірна сітка", "Розмір (UA", "Розмір (EU)", "Груди (см)", "Талія (см)", "Стегна (см)","Закрити"]
+    },
+    "SortMenu": {
+  "header": ["Сортувати за", "Рекомендовані","Ціна (від низької до високої)", "Ціна (від високої до низької)"
+    
+  ]
+},
+
+    "Filtersidebar": {
+      "header": [
+        "Перегляд за", 
+        "Усі продукти", 
+        "Фільтрувати за", 
+        "Ціна", 
+        "Розмір", 
+        "Вибрано", 
+        "Усі", 
+        "Категорія",
+        "Фільтр",
+        "Підтвердити"
+      ],
+      "SizeCatalogue": [ "Усі", "S", "M", "L", "XL" ],
+      "Categories": [
+        "Усі", "Костюми", "Сукні", "Сорочки", "Спідниці", 
+        "Светри", "Брюки", "Жакети", "Топи", "Верхній одяг", "Шорти"
+      ],
+      "PaginatedProducts": ["Попередня", "Наступна"]
+    },
+    
+    "SpecialOffers": {
+    "header": [
+      "Колекція спеціальних пропозицій",
+      "Відкрийте для себе наші ексклюзивні пропозиції та знижки.",
+      "спеціальних пропозицій",
+      "Деталі вибраного продукту"
+    ]
+  },
+  
+  "Infoform": {
+    "header": [
+      "Категорія",
+      "Колір",
+      "Вибрати",
+      "Розмір",
+      "Кількість",
+      "Зв'язатися з нами",
+      "Розмірна сітка одягу",
+      "ІНФОРМАЦІЯ ПРО ПРОДУКТ",
+      "Ціна"
+    ]
+  }
+}
+}
