@@ -4,20 +4,36 @@ import products from '../../data/products';
 
 export default function SeedButton() {
   const handleSeed = async () => {
-    console.log("🌱 Кнопку натиснули — надсилаємо запит...");
-    try {
-      const res = await fetch('https://shoopingsite-backend.onrender.com/api/seed-products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(products),
-      });
+    console.log('🌱 Кнопку натиснули — надсилаємо продукти порціями...');
 
-      const data = await res.json();
-      alert(data.message || 'Успішно!');
+    // 🔹 Хелпер для розбиття на шматки
+    const chunks = (arr, size) =>
+      Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+        arr.slice(i * size, i * size + size)
+      );
+
+    const productChunks = chunks(products, 10); // Розбиваємо по 10
+
+    try {
+      for (const [i, chunk] of productChunks.entries()) {
+        console.log(`➡️ Надсилаємо частину ${i + 1} з ${productChunks.length}`);
+        const res = await fetch('https://shoopingsite-backend.onrender.com/api/seed-products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(chunk),
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`Помилка частини ${i + 1}: ${text}`);
+        }
+      }
+
+      alert('✅ Усі продукти успішно додано!');
     } catch (error) {
-      console.error('❌ Помилка:', error);
+      console.error('❌ Помилка при надсиланні продуктів:', error.message);
       alert('Щось пішло не так!');
     }
   };
