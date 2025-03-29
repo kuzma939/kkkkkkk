@@ -3,16 +3,33 @@
 import products from '../../data/products';
 
 export default function SeedButton() {
+  const normalizeProduct = (raw) => {
+    return {
+      ...raw,
+      images: raw.images?.filter(img => typeof img === 'string').map(url => ({ url })) || [],
+      sizes: raw.sizes?.map(value => ({ value })) || [],
+      translations: raw.translations
+        ? Object.entries(raw.translations).map(([locale, t]) => ({
+            locale,
+            name: t.name,
+            description: t.description,
+            category: t.category,
+            colors: t.colors,
+          }))
+        : [],
+    };
+  };
+
   const handleSeed = async () => {
     console.log('🌱 Кнопку натиснули — надсилаємо продукти порціями...');
 
-    // 🔹 Хелпер для розбиття на шматки
+    const normalized = products.map(normalizeProduct); // 💥 нормалізуємо
     const chunks = (arr, size) =>
       Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
         arr.slice(i * size, i * size + size)
       );
 
-    const productChunks = chunks(products, 10); // Розбиваємо по 10
+    const productChunks = chunks(normalized, 10); // Розбиваємо по 10
 
     try {
       for (const [i, chunk] of productChunks.entries()) {
