@@ -198,7 +198,6 @@ aria-expanded={isCategoriesOpen}
         </button>
        <ul className="flex space-x-4">
  
-  Іконка кошика 
   <li role="menuitem">
     <CartIcon />
   </li>
