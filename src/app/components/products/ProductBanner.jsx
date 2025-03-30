@@ -35,33 +35,34 @@ const [selectedSize, setSelectedSize] = useState('');
       document.body.style.overflow = "auto";
     };
   }, [selectedProduct]);
-
-  const handleAddToCart = async ({ product, selectedColor, selectedSize, quantity }) => {
+  const handleAddToCart = async ({ selectedColor, selectedSize, quantity }) => {
     const sessionId = localStorage.getItem("sessionId");
     if (!sessionId) {
       alert("Не знайдено sessionId");
       return;
     }
-
+  
     try {
-      const res = await fetch("/api/cart", {
+      const res = await fetch("https://shoopingsite-backend.onrender.com/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sessionId,
-          productId: product.id,
+          productId: selectedProduct.id,
           color: selectedColor,
           size: selectedSize,
           quantity,
         }),
       });
-
+  
       const data = await res.json();
       alert(data.message);
     } catch (err) {
+      console.error("❌ Cart POST error:", err);
       alert("Помилка при додаванні в корзину");
     }
   };
+  
 
   if (!selectedProduct) return null;
 
