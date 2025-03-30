@@ -8,7 +8,7 @@ import { FaMoon, FaSun, FaBars, FaTimes, FaChevronDown } from "react-icons/fa";
 import { useHeaderState } from "../../hooks/useHeader"; 
 import { useLanguage } from "../../Functions/useLanguage"; 
 import { useRouter } from "next/navigation"
-//import CartIcon from "../CartIcon/CartIcon"; 
+import CartIcon from "../CartIcon/CartIcon"; 
 const Header = React.memo(({ isDarkMode, toggleDarkMode }) => {
   const { translateList, language, setLanguage } = useLanguage();
   const menuItems = translateList("home", "header");
@@ -196,14 +196,14 @@ aria-expanded={isCategoriesOpen}
             <FaMoon className="text-xs sm:text-sm md:text-base lg:text-lg" />
           )}
         </button>
-      {/*   <ul className="flex space-x-4">
+       <ul className="flex space-x-4">
  
   Іконка кошика 
   <li role="menuitem">
     <CartIcon />
   </li>
 </ul>
-*/}
+
       </div>
 
       {isMenuOpen && (

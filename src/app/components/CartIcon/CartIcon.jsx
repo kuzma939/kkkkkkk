@@ -1,4 +1,4 @@
-{/*"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -52,4 +52,4 @@ const res = await fetch(`https://shoopingsite-backend.onrender.com/api/cart?sess
     </div>
   );
 }
-  */}
+  

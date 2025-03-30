@@ -188,12 +188,12 @@ export default function InfoForm({
       </div>
 
       <div className="flex space-x-4 mt-4">
-       {/* <button
+        <button
           onClick={handleAddToCartClick}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
         >
           Додати в корзину
-        </button>  */}
+        </button>  
         <button
           onClick={handleContactClick}
           className="w-full md:w-1/2 bg-gray-700 hover:bg-gray-500 text-white dark:bg-lime-500 dark:hover:bg-lime-600 dark:text-black font-semibold py-2 rounded transition duration-300"

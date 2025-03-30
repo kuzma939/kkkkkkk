@@ -1,4 +1,4 @@
-{/*'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -157,7 +157,7 @@ export default function Cart() {
     </div>
   );
 }
-*/}
+
 {/*
 Для підключення бекенду потрібно змінити і додати 
 const BACKEND_URL = "https://shoopingsite-backend.onrender.com"; // ← заміни на свій реальний URL
