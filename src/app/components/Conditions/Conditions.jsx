@@ -2,8 +2,7 @@
 "use client";  
 import React from "react";
 import { useLanguage } from "../../Functions/useLanguage";
-// Додай імпорт зверху файлу:
-import SeedButton from "../SeedButtonBackend/SeedButton";
+//import SeedButton from "../SeedButtonBackend/SeedButton";
 
 
 const Conditions = () => {
@@ -13,7 +12,7 @@ const Conditions = () => {
   return (
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "40px 20px", fontSize: "18px", lineHeight: "1.6", color: "#333", textAlign: "left" }}>
      
-      <SeedButton />
+      {/*<SeedButton />*/}
       {/* Головний заголовок */}
       <h1 style={{ fontWeight: "bold", fontSize: "32px", marginBottom: "24px" }}>
         {menuItems[0]}

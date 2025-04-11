@@ -1,4 +1,4 @@
-import products from '../../data/products';
+{/*import products from '../../data/products';
  
  export default function SeedButton() {
    const normalizeProduct = (raw) => {
@@ -63,4 +63,4 @@ import products from '../../data/products';
        Додати продукти в базу
      </button>
    );
- }
+ }*/}
