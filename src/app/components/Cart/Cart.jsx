@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 // Отримати або створити sessionId
@@ -18,6 +19,7 @@ export default function Cart() {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState('');
+  const router = useRouter();
 
   // 1. Ініціалізація sessionId
   useEffect(() => {
@@ -145,15 +147,22 @@ export default function Cart() {
           </div>
         </div>
       ))}
+{cartItems.length > 0 && (
+  <div className="mt-6 text-right">
+    
+    <h2 className="text-xl font-bold">Всього: {total} грн</h2>
+    <button
+      onClick={() => 
+      {
+     localStorage.setItem('totalAmount', total); // зберігаємо суму
+     router.push('/Checkout')}}
+      className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Оформити замовлення
+    </button>
+  </div>
+)}
 
-      {cartItems.length > 0 && (
-        <div className="mt-6 text-right">
-          <h2 className="text-xl font-bold">Всього: {total} грн</h2>
-          <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Оформити замовлення
-          </button>
-        </div>
-      )}
     </div>
   );
 }
