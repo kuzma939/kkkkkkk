@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import fetchGeoCities from '../../utils/fetchGeoCities'
 
 export default function Checkout() {
   const [deliveryMethod, setDeliveryMethod] = useState('');
@@ -67,29 +68,40 @@ export default function Checkout() {
       console.error('Помилка при отриманні відділень:', error);
     }
   };
-
   const handleCityInput = async (e) => {
     const value = e.target.value;
     setCityQuery(value);
     setSelectedCityRef('');
     setWarehouses([]);
-
+  
     if (value.length < 2) {
       setFilteredCities([]);
       return;
     }
-
-    const results = await fetchNovaPoshtaCities(value);
+  
+    let results = [];
+  
+    if (deliveryMethod === 'nova-poshta') {
+      results = await fetchNovaPoshtaCities(value);
+    } else if (deliveryMethod === 'ukr-poshta' || deliveryMethod === 'courier') {
+      results = await fetchGeoCities(value, deliveryMethod);
+    }
+  
     setFilteredCities(results);
   };
-
+  
   const handleCitySelect = (city) => {
-    setCityQuery(city.Present);
-    setFilteredCities([]);
-    setSelectedCityRef(city.DeliveryCity);
-    fetchWarehouses(city.DeliveryCity);
+    if (deliveryMethod === 'nova-poshta') {
+      setCityQuery(city.Present);
+      setFilteredCities([]);
+      setSelectedCityRef(city.DeliveryCity);
+      fetchWarehouses(city.DeliveryCity);
+    } else {
+      setCityQuery(city.display_name || city.name);
+      setFilteredCities([]);
+    }
   };
-
+  
   const BACKEND_URL = process.env.NEXT_PUBLIC_BASE_URL;
  
   const handleStripePayment = async () => {
@@ -199,15 +211,15 @@ export default function Checkout() {
           <input value={lastName} onChange={(e) => setLastName(e.target.value)} className="p-2 border rounded" placeholder="Прізвище" required />
           <input value={patronymic} onChange={(e) => setPatronymic(e.target.value)} className="p-2 border rounded" placeholder="По батькові" />
         </div>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full p-2 border rounded" required />
-        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Телефон" className="w-full p-2 border rounded" required />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600" required />
+        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Телефон" className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600" required />
 
         <div>
-          <label className="block mb-1 font-medium">Спосіб доставки</label>
+          <label className="block mb-1 font-medium bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">Спосіб доставки</label>
           <select
             value={deliveryMethod}
             onChange={(e) => setDeliveryMethod(e.target.value)}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
             required
           >
             <option value="">Оберіть спосіб</option>
@@ -226,7 +238,7 @@ export default function Checkout() {
                 value={cityQuery}
                 onChange={handleCityInput}
                 placeholder="Почніть вводити назву"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
               />
               {filteredCities.length > 0 && (
                 <ul className="mt-2 border rounded shadow bg-white max-h-40 overflow-auto z-10 relative">
@@ -245,9 +257,9 @@ export default function Checkout() {
 
             {warehouses.length > 0 && (
               <div>
-                <label className="block mb-1 font-medium">Відділення</label>
+                <label className="block mb-1 font-medium bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">Відділення</label>
                 <select
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
                   value={selectedWarehouse}
                   onChange={(e) => setSelectedWarehouse(e.target.value)}
                 >
@@ -263,18 +275,45 @@ export default function Checkout() {
           </>
         )}
 
+{(deliveryMethod === 'ukr-poshta' || deliveryMethod === 'courier') && (
+  <div>
+    <label className="block mb-1 font-medium ">Населений пункт</label>
+    <input
+      type="text"
+      value={cityQuery}
+      onChange={handleCityInput}
+      placeholder="Почніть вводити назву"
+      className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
+    />
+    {filteredCities.length > 0 && (
+      <ul className="mt-2 border rounded shadow bg-white max-h-40 overflow-auto z-10 relative">
+        {filteredCities.map((city, idx) => (
+          <li
+            key={idx}
+            onClick={() => handleCitySelect(city)}
+            className="p-2 hover:bg-gray-100 cursor-pointer bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
+          >
+            {city.display_name || city.name}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
+
+
         <textarea
           rows={4}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Коментар до замовлення"
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
         />
 
         <div>
           <label className="block mb-1 font-medium">Оплата</label>
           <div className="space-y-2">
-            <label className="flex items-center space-x-2">
+            <label className="flex items-center space-x-2 bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
               <input
                 type="radio"
                 name="payment"
@@ -304,10 +343,10 @@ export default function Checkout() {
         </div>
 
         {paymentType === 'full' && (
-          <div className="bg-gray-50 p-4 rounded border">
+          <div className="bg-gray-50 p-4 rounded border bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
             <label className="block mb-2 font-medium">Спосіб онлайн-оплати</label>
             <div className="space-y-2">
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-2 bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
                 <input
                   type="radio"
                   name="online-method"
@@ -317,7 +356,7 @@ export default function Checkout() {
                 />
                 <span>LiqPay (🇺🇦 грн)</span>
               </label>
-              <label className="flex items-center space-x-2">
+              <label className="flex items-center space-x-2 bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
                 <input
                   type="radio"
                   name="online-method"
