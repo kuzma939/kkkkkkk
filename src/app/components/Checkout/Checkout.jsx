@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import fetchGeoCities from '../../utils/fetchGeoCities'
+//import fetchGeoCities from '../../utils/fetchGeoCities'
 import { validateForm } from '../../utils/validationContactForm';
 
 export default function Checkout() {
@@ -95,7 +95,8 @@ export default function Checkout() {
     if (deliveryMethod === 'nova-poshta') {
       results = await fetchNovaPoshtaCities(value);
     } else if (deliveryMethod === 'ukr-poshta' || deliveryMethod === 'courier') {
-      results = await fetchGeoCities(value, deliveryMethod);
+        setFilteredCities([]);
+   
     }
     setFilteredCities(results);
   };
@@ -367,25 +368,14 @@ export default function Checkout() {
           <div>
             <label className="block mb-1 font-medium">Населений пункт</label>
             <input
-              type="text"
-              value={cityQuery}
-              onChange={handleCityInput}
-              placeholder="Почніть вводити назву"
-              className="w-full p-2 border rounded"
-            />
-            {filteredCities.length > 0 && (
-              <ul className="mt-2 border rounded shadow bg-white max-h-40 overflow-auto z-10 relative">
-                {filteredCities.map((city, idx) => (
-                  <li
-                    key={idx}
-                    onClick={() => handleCitySelect(city)}
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                  >
-                    {city.display_name || city.name}
-                  </li>
-                ))}
-              </ul>
-            )}
+  type="text"
+  value={cityQuery}
+  onChange={(e) => setCityQuery(e.target.value)}
+  placeholder="Введіть населений пункт вручну"
+  className="w-full p-2 border rounded"
+/>
+
+      
           </div>
         )}
   
