@@ -21,6 +21,217 @@ export default function Checkout() {
   const [phone, setPhone] = useState('');
   const [comment, setComment] = useState('');
 
+  const [sessionId, setSessionId] = useState('');
+
+  useEffect(() => {
+    const id = localStorage.getItem('sessionId');
+    if (id) setSessionId(id);
+  }, []);
+
+  useEffect(() => {
+    const amount = localStorage.getItem('totalAmount');
+    if (amount) setTotal(Number(amount));
+  }, []);
+
+  const prepayAmount = (total * 0.1).toFixed(2);
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const fetchNovaPoshtaCities = async (query) => {
+    const apiKey = process.env.NEXT_PUBLIC_NP_API_KEY;
+    try {
+      const response = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          apiKey,
+          modelName: 'Address',
+          calledMethod: 'searchSettlements',
+          methodProperties: { CityName: query, Limit: 10 }
+        })
+      });
+      const data = await response.json();
+      return data.data?.[0]?.Addresses || [];
+    } catch (error) {
+      console.error('Помилка при запиті до Нової Пошти:', error);
+      return [];
+    }
+  };
+
+  const fetchWarehouses = async (cityRef) => {
+    const apiKey = process.env.NEXT_PUBLIC_NP_API_KEY;
+    try {
+      const response = await fetch('https://api.novaposhta.ua/v2.0/json/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          apiKey,
+          modelName: 'AddressGeneral',
+          calledMethod: 'getWarehouses',
+          methodProperties: { CityRef: cityRef, Limit: 50 }
+        })
+      });
+      const data = await response.json();
+      setWarehouses(data.data || []);
+    } catch (error) {
+      console.error('Помилка при отриманні відділень:', error);
+    }
+  };
+
+  const handleCityInput = async (e) => {
+    const value = e.target.value;
+    setCityQuery(value);
+    setSelectedCityRef('');
+    setWarehouses([]);
+
+    if (value.length < 2) {
+      setFilteredCities([]);
+      return;
+    }
+
+    let results = [];
+    if (deliveryMethod === 'nova-poshta') {
+      results = await fetchNovaPoshtaCities(value);
+    } else if (deliveryMethod === 'ukr-poshta' || deliveryMethod === 'courier') {
+      results = await fetchGeoCities(value, deliveryMethod);
+    }
+    setFilteredCities(results);
+  };
+
+  const handleCitySelect = (city) => {
+    if (deliveryMethod === 'nova-poshta') {
+      setCityQuery(city.Present);
+      setFilteredCities([]);
+      setSelectedCityRef(city.DeliveryCity);
+      fetchWarehouses(city.DeliveryCity);
+    } else {
+      setCityQuery(city.display_name || city.name);
+      setFilteredCities([]);
+    }
+  };
+
+  const handleStripePayment = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/payments/stripe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: total,
+          successUrl: `${window.location.origin}/success`,
+          cancelUrl: `${window.location.origin}/checkout`,
+        }),
+      });
+      const data = await response.json();
+      if (data.url) window.location.href = data.url;
+    } catch (err) {
+      console.error('Stripe помилка:', err);
+      alert('Не вдалося перейти до Stripe оплати');
+    }
+  };
+
+  const handleLiqPayPayment = async (order) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/payments/liqpay`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: order.total,
+          resultUrl: `${window.location.origin}/success`,
+          serverUrl: `${BACKEND_URL}/api/payments/payment-callback`,
+          order
+        })
+      });
+      const html = await response.text();
+      const container = document.createElement('div');
+      container.innerHTML = html;
+      document.body.appendChild(container);
+      container.querySelector('form').submit();
+    } catch (err) {
+      console.error('LiqPay помилка:', err);
+      alert('Не вдалося ініціювати LiqPay оплату');
+    }
+  };
+
+  const saveOrder = async (order) => {
+    const res = await fetch(`${BACKEND_URL}/api/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    });
+
+    if (!res.ok) throw new Error('Не вдалося зберегти замовлення');
+    const saved = await res.json();
+    console.log('✅ Замовлення збережено:', saved);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const order = {
+      firstName,
+      lastName,
+      patronymic,
+      email,
+      phone,
+      deliveryMethod,
+      city: cityQuery,
+      warehouse: selectedWarehouse,
+      comment,
+      total,
+      prepay: paymentType === 'prepay',
+      paymentMethod: onlinePaymentMethod || 'cod',
+      sessionId,
+    };
+
+    try {
+      if (paymentType === 'full') {
+        localStorage.setItem('pendingOrder', JSON.stringify(order));
+        if (onlinePaymentMethod === 'stripe') {
+          await handleStripePayment();
+        } else if (onlinePaymentMethod === 'liqpay') {
+          await handleLiqPayPayment(order);
+        } else {
+          alert('Будь ласка, оберіть метод онлайн-оплати');
+        }
+      } else {
+        await saveOrder(order);
+        alert('Замовлення оформлено! Очікуйте дзвінка 📞');
+      }
+    } catch (error) {
+      console.error('❌ Помилка при обробці замовлення:', error);
+      alert('Не вдалося обробити замовлення. Спробуйте ще раз.');
+    }
+  };
+  {/*
+'use client';
+
+import { useState, useEffect } from 'react';
+import fetchGeoCities from '../../utils/fetchGeoCities'
+
+export default function Checkout() {
+  const [deliveryMethod, setDeliveryMethod] = useState('');
+  const [cityQuery, setCityQuery] = useState('');
+  const [filteredCities, setFilteredCities] = useState([]);
+  const [selectedCityRef, setSelectedCityRef] = useState('');
+  const [warehouses, setWarehouses] = useState([]);
+  const [selectedWarehouse, setSelectedWarehouse] = useState('');
+  const [paymentType, setPaymentType] = useState('');
+  const [total, setTotal] = useState(0);
+  const [onlinePaymentMethod, setOnlinePaymentMethod] = useState('');
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [patronymic, setPatronymic] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [comment, setComment] = useState('');
+
+  const [sessionId, setSessionId] = useState('');
+
+useEffect(() => {
+  const id = localStorage.getItem('sessionId');
+  if (id) setSessionId(id);
+}, []);
+
   useEffect(() => {
     const amount = localStorage.getItem('totalAmount');
     if (amount) setTotal(Number(amount));
@@ -103,18 +314,19 @@ export default function Checkout() {
   };
   
   const BACKEND_URL = process.env.NEXT_PUBLIC_BASE_URL;
- 
   const handleStripePayment = async () => {
     try {
+      // перед редіректом уже зберігається order в localStorage
       const response = await fetch(`${BACKEND_URL}/api/payments/stripe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: total,
           successUrl: `${window.location.origin}/success`,
-          cancelUrl: `${window.location.origin}/checkout`
-        })
+          cancelUrl: `${window.location.origin}/checkout`,
+        }),
       });
+  
       const data = await response.json();
       if (data.url) {
         window.location.href = data.url;
@@ -124,6 +336,56 @@ export default function Checkout() {
       alert('Не вдалося перейти до Stripe оплати');
     }
   };
+{/*   const handleStripePayment = async () => {
+                    try {
+                      const response = await fetch(`${BACKEND_URL}/api/payments/stripe`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          amount: total,
+                          successUrl: `${window.location.origin}/success`,
+                          cancelUrl: `${window.location.origin}/checkout`
+                        })
+                      });
+                      const data = await response.json();
+      if (                  onChange={() => setOnlinePaymentMethod('liqpay')}
+                
+               
+  data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Stripe помилка:', err);
+      alert('Не вдалося перейти до Stripe оплати');
+    }
+  };
+  const handleLiqPayPayment = async () => {
+    const order = {
+      firstName, lastName, patronymic, email, phone,
+      deliveryMethod, city: cityQuery, warehouse: selectedWarehouse,
+      comment, total, prepay: paymentType === 'prepay',
+      paymentMethod: 'liqpay',
+      sessionId // ➕ не забудь додати!
+    };
+  
+    const response = await fetch(`${BACKEND_URL}/api/payments/liqpay`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: total,
+        resultUrl: `${window.location.origin}/success`,
+        serverUrl: `${BACKEND_URL}/api/payments/payment-callback`,
+        order
+      })
+    });
+  
+    const html = await response.text();
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    container.querySelector('form').submit();
+  };
+{/*
   const handleLiqPayPayment = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/payments/liqpay`, {
@@ -154,10 +416,21 @@ export default function Checkout() {
     }
   };
   
-
+  const saveOrder = async (order) => {
+    const res = await fetch(`${BACKEND_URL}/api/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    });
+  
+    if (!res.ok) throw new Error('Не вдалося зберегти замовлення');
+    const saved = await res.json();
+    console.log('✅ Замовлення збережено:', saved);
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const order = {
       firstName,
       lastName,
@@ -170,38 +443,31 @@ export default function Checkout() {
       comment,
       total,
       prepay: paymentType === 'prepay',
-      paymentMethod: onlinePaymentMethod || 'cod'
+      paymentMethod: onlinePaymentMethod || 'cod',
+      sessionId, // з useState
     };
-
+  
     try {
-      const res = await fetch(`${BACKEND_URL}/api/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-      });
-
-      if (!res.ok) throw new Error('Не вдалося зберегти замовлення');
-      const saved = await res.json();
-      console.log('✅ Замовлення збережено:', saved);
-
       if (paymentType === 'full') {
+        localStorage.setItem('pendingOrder', JSON.stringify(order));
+  
         if (onlinePaymentMethod === 'stripe') {
-          handleStripePayment();
+          await handleStripePayment();
         } else if (onlinePaymentMethod === 'liqpay') {
-          handleLiqPayPayment();
+          await handleLiqPayPayment(order); // передай order
         } else {
           alert('Будь ласка, оберіть метод онлайн-оплати');
         }
       } else {
+        await saveOrder(order);
         alert('Замовлення оформлено! Очікуйте дзвінка 📞');
       }
-
     } catch (error) {
-      console.error('❌ Помилка при збереженні замовлення:', error);
-      alert('Не вдалося зберегти замовлення. Спробуйте ще раз.');
+      console.error('❌ Помилка при обробці замовлення:', error);
+      alert('Не вдалося обробити замовлення. Спробуйте ще раз.');
     }
-  };
-
+  };*/}
+  
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Оформлення замовлення</h1>
@@ -246,7 +512,7 @@ export default function Checkout() {
                     <li
                       key={idx}
                       onClick={() => handleCitySelect(city)}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      className="p-2 hover:bg-gray-100 cursor-pointer  bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600"
                     >
                       {city.Present}
                     </li>
@@ -326,7 +592,7 @@ export default function Checkout() {
               />
               <span>Оплата онлайн (повна сума: {total} грн)</span>
             </label>
-            <label className="flex items-center space-x-2">
+          {/* <label className="flex items-center space-x-2">
               <input
                 type="radio"
                 name="payment"
@@ -338,12 +604,12 @@ export default function Checkout() {
                 }}
               />
               <span>Передплата 10% ({prepayAmount} грн), решта — при отриманні</span>
-            </label>
+            </label>*/}
           </div>
         </div>
 
         {paymentType === 'full' && (
-          <div className="bg-gray-50 p-4 rounded border bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
+          <div className="bg-gray-50 p-4 rounded border">
             <label className="block mb-2 font-medium">Спосіб онлайн-оплати</label>
             <div className="space-y-2">
               <label className="flex items-center space-x-2 bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
@@ -352,8 +618,9 @@ export default function Checkout() {
                   name="online-method"
                   value="liqpay"
                   checked={onlinePaymentMethod === 'liqpay'}
-                  onChange={() => setOnlinePaymentMethod('liqpay')}
-                />
+                
+  onChange={() => setOnlinePaymentMethod('liqpay')}
+               />
                 <span>LiqPay (🇺🇦 грн)</span>
               </label>
               <label className="flex items-center space-x-2 bg-white dark:bg-black text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 border-gray-300 dark:border-gray-600">
@@ -375,7 +642,7 @@ export default function Checkout() {
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           disabled={!paymentType}
         >
-          Надіслати замовлення
+          Оплатити замовлення
         </button>
       </form>
     </div>
