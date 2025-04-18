@@ -165,19 +165,22 @@ export default function Checkout() {
     const saved = await res.json();
     console.log('✅ Замовлення збережено:', saved);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const formValues = { firstName, lastName, email, phone };
     const validationErrors = validateForm(formValues);
   
+    console.log("🔍 Перевірка форми:", formValues);
+    console.log("❌ Помилки валідації:", validationErrors);
+  
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors); 
-      return; 
+      setErrors(validationErrors);
+      return;
     }
   
-    setErrors({}); 
-  
+    setErrors({});
+    
     const order = {
       firstName,
       lastName,
@@ -193,18 +196,29 @@ export default function Checkout() {
       paymentMethod: onlinePaymentMethod || 'cod',
       sessionId,
     };
-
+  
+    console.log("🧾 Готове замовлення:", order);
+    console.log("💳 Метод оплати:", paymentType, onlinePaymentMethod);
+  
     try {
       if (paymentType === 'full') {
+        if (!onlinePaymentMethod) {
+          alert('Будь ласка, оберіть метод онлайн-оплати');
+          return;
+        }
+  
         localStorage.setItem('pendingOrder', JSON.stringify(order));
+  
         if (onlinePaymentMethod === 'stripe') {
+          console.log("➡️ Переходимо до Stripe...");
           await handleStripePayment();
         } else if (onlinePaymentMethod === 'liqpay') {
+          console.log("➡️ Переходимо до LiqPay...");
           await handleLiqPayPayment(order);
-        } else {
-          alert('Будь ласка, оберіть метод онлайн-оплати');
         }
+  
       } else {
+        console.log("📦 Зберігаємо замовлення без онлайн-оплати...");
         await saveOrder(order);
         alert('Замовлення оформлено! Очікуйте дзвінка 📞');
       }
@@ -213,6 +227,7 @@ export default function Checkout() {
       alert('Не вдалося обробити замовлення. Спробуйте ще раз.');
     }
   };
+  
  
   return (
     <div className="p-6 max-w-3xl mx-auto">
