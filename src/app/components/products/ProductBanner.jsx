@@ -43,7 +43,7 @@ const [selectedSize, setSelectedSize] = useState('');
     }
   
     try {
-      const res = await fetch("https://shoopingsite-backend.onrender.com/api/cart", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

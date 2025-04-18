@@ -33,7 +33,7 @@ export default function Cart() {
     const fetchCart = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://shoopingsite-backend.onrender.com/api/cart?sessionId=${sessionId}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart?sessionId=${sessionId}`)
         const data = await res.json();
         setCartItems(data.cart);
       } catch (error) {
@@ -51,7 +51,7 @@ export default function Cart() {
     if (quantity < 1) return;
     setLoading(true);
     try {
-      const res = await fetch("https://shoopingsite-backend.onrender.com/api/cart", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cartId, quantity, sessionId }),
@@ -72,7 +72,7 @@ export default function Cart() {
   const removeItem = async (cartId) => {
     setLoading(true);
     try {
-      const res = await fetch("https://shoopingsite-backend.onrender.com/api/cart", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cartId, sessionId }),

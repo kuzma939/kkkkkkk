@@ -17,7 +17,7 @@ export default function CartIcon() {
           sessionId = "_" + Math.random().toString(36).substr(2, 9);
           localStorage.setItem("sessionId", sessionId);
         }
-const res = await fetch(`https://shoopingsite-backend.onrender.com/api/cart?sessionId=${sessionId}`);
+const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/cart?sessionId=${sessionId}`);
 
        // const res = await fetch(`/api/cart?sessionId=${sessionId}`);
         const data = await res.json();
